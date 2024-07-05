@@ -27,7 +27,7 @@ class _HomeScreenState extends State<Homescreen> {
   int _currentIndex = 0;
   PageController _pageController = PageController();
 
-  List<String> pageTitles = ['오늘의 혈당', '기능 2'];
+  List<String> pageTitles = ['오늘의 혈당', '인슐린 기록'];
 
   @override
   Widget build(BuildContext context) {

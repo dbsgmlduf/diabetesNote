@@ -92,6 +92,10 @@ class _InjectionPageState extends State<InjectionPage> {
 
   @override
   Widget build(BuildContext context) {
+    final bool canCompleteToday = _canCompleteInjectionToday();
+    final String buttonText = canCompleteToday ? '오늘 주입 필요' : '오늘 주입 완료';
+    final Color buttonColor = canCompleteToday ? Colors.red : Colors.green;
+
     return Scaffold(
       backgroundColor: Colors.lightBlue,
       appBar: AppBar(
@@ -118,15 +122,12 @@ class _InjectionPageState extends State<InjectionPage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: List.generate(8, (colIndex) {
                           int index = rowIndex * 8 + colIndex + 1;
-                          return GestureDetector(
-                            onTap: () => _handleInjectionComplete(),
-                            child: Container(
-                              margin: EdgeInsets.all(4.0),
-                              child: CircleAvatar(
-                                backgroundColor:
-                                buttonStates[index] == true ? Colors.green : Colors.grey,
-                                child: Text('$index'),
-                              ),
+                          return Container(
+                            margin: EdgeInsets.all(4.0),
+                            child: CircleAvatar(
+                              backgroundColor:
+                              buttonStates[index] == true ? Colors.green : Colors.grey,
+                              child: Text('$index'),
                             ),
                           );
                         }),
@@ -145,8 +146,11 @@ class _InjectionPageState extends State<InjectionPage> {
             ),
             SizedBox(height: 10), // 텍스트와 버튼 사이의 간격을 조절
             ElevatedButton(
-              onPressed: _canCompleteInjectionToday() ? _handleInjectionComplete : null,
-              child: Text('오늘 주입 완료'),
+              onPressed: canCompleteToday ? _handleInjectionComplete : null,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: buttonColor
+              ),
+              child: Text(buttonText),
             ),
           ],
         ),

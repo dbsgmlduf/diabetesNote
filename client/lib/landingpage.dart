@@ -17,6 +17,7 @@ class _LandingPageState extends State<Landingpage>{
     });
     super.initState();
   }
+  @override
   Widget build(BuildContext context){
     return Scaffold(
       body: Stack(

@@ -1,6 +1,7 @@
 import 'package:client/mainPages/communityscreen.dart';
 import 'package:client/mainPages/homescreen.dart';
 import 'package:client/mainPages/settingscreen.dart';
+
 import 'package:flutter/material.dart';
 class Mainpage extends StatefulWidget {
   @override
@@ -26,7 +27,7 @@ class _MainPageState extends State<Mainpage>{
   List pages =[
     Homescreen(),
     Communityscreen(),
-    Settingscreen(),
+    SettingScreen(),
   ];
   @override
   Widget build(BuildContext context){
