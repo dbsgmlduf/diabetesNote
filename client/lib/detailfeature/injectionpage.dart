@@ -123,11 +123,15 @@ class _InjectionPageState extends State<InjectionPage> {
                         children: List.generate(8, (colIndex) {
                           int index = rowIndex * 8 + colIndex + 1;
                           return Container(
-                            margin: EdgeInsets.all(4.0),
+                            margin: EdgeInsets.all(2.0), // 간격을 조절
                             child: CircleAvatar(
+                              radius: 20, // 크기를 조절
                               backgroundColor:
                               buttonStates[index] == true ? Colors.green : Colors.grey,
-                              child: Text('$index'),
+                              child: Text(
+                                '$index',
+                                style: TextStyle(fontSize: 14), // 텍스트 크기를 조절
+                              ),
                             ),
                           );
                         }),
@@ -148,7 +152,7 @@ class _InjectionPageState extends State<InjectionPage> {
             ElevatedButton(
               onPressed: canCompleteToday ? _handleInjectionComplete : null,
               style: ElevatedButton.styleFrom(
-                backgroundColor: buttonColor
+                backgroundColor: buttonColor, // 배경색 설정
               ),
               child: Text(buttonText),
             ),
