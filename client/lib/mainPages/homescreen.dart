@@ -246,3 +246,4 @@ class BloodSugarCard extends StatelessWidget {
     );
   }
 }
+
