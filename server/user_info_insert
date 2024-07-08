@@ -9,9 +9,9 @@ def get_db_connection():
     try:
         connection = mysql.connector.connect(
             host='localhost',
-            database='sugar_note',
-            user='root',
-            password='010319'
+            database = 'database',
+            user= 'user_name',
+            password= 'password'
         )
         return connection
     except Error as e:
