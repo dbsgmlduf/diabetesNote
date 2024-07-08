@@ -3,11 +3,11 @@ from mysql.connector import Error
 
 def update_bloodsugar(user_no, new_blood_sugar, measure_date, db_name):
     try:
-        connection = mysql.connector.connect(
+            connection = mysql.connector.connect(
             host='localhost',
-            database=db_name,
-            user='root',
-            password='010319'
+            database = 'database',
+            user= 'user_name',
+            password= 'password'
         )
 
         if connection.is_connected():
