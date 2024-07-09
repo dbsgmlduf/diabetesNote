@@ -2,10 +2,8 @@ from flask import Flask, request, jsonify
 import mysql.connector
 from mysql.connector import Error
 
-app = Flask(__name__)
-
-# MySQL 연결 설정
-def get_db_connection():
+# 데이터베이스에 데이터 삽입
+def insert_bloodsugar(user_no, blood_sugar, measure_date):
     try:
         connection = mysql.connector.connect(
             host='localhost',
@@ -13,19 +11,9 @@ def get_db_connection():
             user='root',
             password='010319'
         )
-        return connection
-    except Error as e:
-        print("MySQL 연결 오류:", e)
-        return None
-
-# 데이터베이스에 데이터 삽입
-def insert_into_bloodsugar(user_no, blood_sugar, measure_date):
-    try:
-        connection = get_db_connection()
         if connection is not None:
             cursor = connection.cursor()
-
-            # bloodsugar 테이블에 데이터 삽입
+            
             insert_query = """
             INSERT INTO bloodsugar (user_no, blood_sugar, measure_date)
             VALUES (%s, %s, %s)
@@ -45,30 +33,20 @@ def insert_into_bloodsugar(user_no, blood_sugar, measure_date):
         if 'connection' in locals() and connection.is_connected():
             connection.close()
 
-# 루트 엔드포인트 추가
-@app.route('/')
-def hello():
-    return 'hello_world'
-
-# Flask 라우트 정의
-@app.route('/insert', methods=['POST'])
-def insert_data():
+#FLASK
+def handle_insert_bloodsugar():
     data = request.get_json()
     try:
         user_no = data['user_no']
         blood_sugar = data['blood_sugar']
         measure_date = data['measure_date'] 
+
+        if insert_bloodsugar(user_no, blood_sugar, measure_date):
+            return jsonify({'message': '혈당 정보 삭제 성공'})
+        else:
+            return jsonify({'message': '혈당 정보 삭제 실패'}), 500
+        
     except KeyError as e:
         return jsonify({'message': f'필수 데이터 누락: {str(e)}'}), 400
 
-    success, error_message = insert_into_bloodsugar(user_no, blood_sugar, measure_date)
-    if success:
-        response = {'message': '데이터 삽입 성공'}
-    else:
-        response = {'message': f'데이터 삽입 실패: {error_message}'}
-
-    return jsonify(response)
-
-if __name__ == '__main__':
-    app.run(debug=True)
     

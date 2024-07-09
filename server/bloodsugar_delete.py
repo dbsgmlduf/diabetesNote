@@ -1,8 +1,6 @@
-from flask import Flask, request, jsonify
+from flask import request, jsonify
 import mysql.connector
 from mysql.connector import Error
-
-app = Flask(__name__)
 
 def delete_bloodsugar(user_no, measure_date, db_name):
     try:
@@ -16,7 +14,6 @@ def delete_bloodsugar(user_no, measure_date, db_name):
         if connection.is_connected():
             cursor = connection.cursor()
 
-            # bloodsugar 테이블 데이터 삭제
             delete_query = """
             DELETE FROM bloodsugar
             WHERE user_no = %s AND measure_date = %s
@@ -40,8 +37,7 @@ def delete_bloodsugar(user_no, measure_date, db_name):
             connection.close()
             print("MySQL 연결 종료")
 
-@app.route('/delete_bloodsugar', methods=['DELETE'])
-def delete_bloodsugar_endpoint():
+def handle_delete_bloodsugar():
     try:
         data = request.get_json()
         user_no = data['user_no']
@@ -55,6 +51,3 @@ def delete_bloodsugar_endpoint():
 
     except Exception as e:
         return jsonify({'message': '요청 처리 중 오류 발생', 'error': str(e)}), 500
-
-if __name__ == '__main__':
-    app.run(debug=True)
